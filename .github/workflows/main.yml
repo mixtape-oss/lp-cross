@@ -278,7 +278,7 @@ jobs:
         run: |
           chmod +x gradlew
           export TAG="$(echo $GITHUB_REF | grep -q refs/tags && echo ${GITHUB_REF/refs\/tags\/} || echo '')"
-          ./gradlew publish:jfrog
+          ./gradlew publish:publish
         env:
           JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }}
           JFROG_PASSWORD: ${{ secrets.JFROG_PASSWORD }}
