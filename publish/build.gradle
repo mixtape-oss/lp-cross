@@ -38,6 +38,7 @@ publishing {
 
             groupId 'com.github.natanbc'
             artifactId 'lp-cross'
+            version rootProject.version
 
             artifact sourceJar
         }
