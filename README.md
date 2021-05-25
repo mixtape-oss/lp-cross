@@ -19,3 +19,17 @@ lavaplayer repo.
 
 `src/connector` and `src/udpqueue` are the same code in [lavaplayer](https://github.com/sedmelluq/lavaplayer/tree/bec39953a037b318663fad76873fbab9ce13c033/natives/connector)
 and [jda-nas](https://github.com/sedmelluq/jda-nas/tree/c3adb668c8bbdf3a7dca381f3047fa3a508194df/udp-queue-natives/udpqueue)
+
+## Installation
+
+##### Gradle
+
+```groovy
+repositories {
+  maven { url 'https://dimensional.jfrog.io/artifactory/maven' }
+}
+
+dependencies {
+  implementation("com.github.natanbc:lp-cross:0.1.2")
+}
+```
