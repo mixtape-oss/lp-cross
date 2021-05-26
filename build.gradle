@@ -19,7 +19,7 @@ plugins {
     id 'c'
 }
 
-def versionObj = new Version(major: 0, minor: 1, revision: 3)
+def versionObj = new Version(major: 0, minor: 1, revision: 3, patch: 1)
 version "${versionObj}"
 
 apply from: 'toolchains.gradle'
@@ -304,10 +304,9 @@ tasks.withType(LinkSharedLibrary) {
 }
 
 class Version {
-    String major, minor, revision
-
+    String major, minor, revision, patch
 
     String toString() {
-        "${major}.${minor}" + (revision == "0" ? "" : ".${revision}")
+        "${major}.${minor}" + (revision == "0" ? "" : ".${revision}") + (patch == "0" ? "" : "-${patch}")
     }
 }

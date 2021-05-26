@@ -6,6 +6,8 @@ plugins {
 }
 
 archivesBaseName = 'lp-cross'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 task copyNatives(type: Copy) {
     from rootProject.projectDir
