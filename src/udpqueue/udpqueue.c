@@ -361,19 +361,19 @@ static void manager_process(queue_manager_t* manager) {
 	closesocket(socketv6);
 }
 
-JNIEXPORT jlong JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_create(JNIEnv* jni, jobject me, jint queue_buffer_capacity, jlong packet_interval) {
+JNIEXPORT jlong JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_create(JNIEnv* jni, jobject me, jint queue_buffer_capacity, jlong packet_interval) {
 	return (jlong) manager_create((size_t) queue_buffer_capacity, packet_interval);
 }
 
-JNIEXPORT void JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_destroy(JNIEnv* jni, jobject me, jlong instance) {
+JNIEXPORT void JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_destroy(JNIEnv* jni, jobject me, jlong instance) {
 	manager_destroy((queue_manager_t*) instance);
 }
 
-JNIEXPORT jint JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_getRemainingCapacity(JNIEnv* jni, jobject me, jlong instance, jlong key) {
+JNIEXPORT jint JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_getRemainingCapacity(JNIEnv* jni, jobject me, jlong instance, jlong key) {
 	return (jint) manager_get_remaining_capacity((queue_manager_t*) instance, (uint64_t) key);
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_queuePacket(JNIEnv* jni, jobject me, jlong instance, jlong key, jstring address_string,
+JNIEXPORT jboolean JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_queuePacket(JNIEnv* jni, jobject me, jlong instance, jlong key, jstring address_string,
 		jint port, jobject data_buffer, jint data_length) {
 
 	const char* address = (*jni)->GetStringUTFChars(jni, address_string, NULL);
@@ -386,7 +386,7 @@ JNIEXPORT jboolean JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_native
 	return result ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_queuePacketWithSocket(
+JNIEXPORT jboolean JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_queuePacketWithSocket(
     JNIEnv* jni, jobject me, jlong instance, jlong key, jstring address_string, jint port, jobject data_buffer,
     jint data_length, jlong socket_handle) {
 
@@ -400,18 +400,18 @@ JNIEXPORT jboolean JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_native
   return result ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_deleteQueue(
+JNIEXPORT jboolean JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_deleteQueue(
     JNIEnv* jni, jobject me, jlong instance, jlong key) {
 
 	bool result = manager_queue_delete((queue_manager_t*) instance, (uint64_t) key);
 	return result ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_process(JNIEnv* jni, jobject me, jlong instance) {
+JNIEXPORT void JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_process(JNIEnv* jni, jobject me, jlong instance) {
 	manager_process((queue_manager_t*) instance);
 }
 
-JNIEXPORT void JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_processWithSocket(
+JNIEXPORT void JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_processWithSocket(
     JNIEnv* jni, jobject me, jlong instance, jlong socketv4, jlong socketv6) {
 
   manager_process_with_socket((queue_manager_t*) instance, (socket_t) socketv4, (socket_t) socketv6);
@@ -423,7 +423,7 @@ jint JNICALL waiting_iterate_callback(jlong class_tag, jlong size, jlong* tag_pt
 	return JVMTI_VISIT_ABORT;
 }
 
-JNIEXPORT void JNICALL Java_com_sedmelluq_discord_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_pauseDemo(JNIEnv* jni, jclass me, jint length) {
+JNIEXPORT void JNICALL Java_lavaplayer_udpqueue_natives_UdpQueueManagerLibrary_pauseDemo(JNIEnv* jni, jclass me, jint length) {
 	jvmtiEnv* jvmti;
 	JavaVM* vm;
 
