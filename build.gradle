@@ -19,7 +19,7 @@ plugins {
     id 'c'
 }
 
-def versionObj = new Version(major: 0, minor: 1, revision: 3, patch: 1)
+def versionObj = new Version(major: 0, minor: 1, revision: 8, patch: 0)
 version "${versionObj}"
 
 apply from: 'toolchains.gradle'
