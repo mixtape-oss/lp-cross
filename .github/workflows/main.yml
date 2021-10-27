@@ -72,96 +72,52 @@ jobs:
         with:
           name: linux-x86-natives
           path: natives/*
-  linux-arm-natives:
-    needs: [download-sources]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - name: Cache natives
-        uses: actions/cache@v2
-        id: cache-natives
-        with:
-          path: |
-            natives/linux-arm
-            natives/linux-aarch64
-            natives/linux-musl-aarch64
-          key: linux-arm-${{ hashFiles('build.gradle', 'toolchains.gradle', 'fuck_autotools/**', 'src/**') }}
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        with:
-          java-version: 15
-      - uses: actions/download-artifact@v2
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        with:
-          name: sources
-      - name: Extract sources
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: unzip src.zip
-      - name: Install ARM compilers
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: |
-          # installing these two breaks i386 compilation
-          # https://bugs.launchpad.net/ubuntu/+source/gcc-defaults/+bug/1300211
-          sudo apt install g++-arm-linux-gnueabihf
-          sudo apt install g++-aarch64-linux-gnu
-          curl -sL https://github.com/natanbc/actions-binaries/releases/download/1/aarch64-linux-musl-cross.tgz -o - | tar xzf -
-      - name: Build ARM natives
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: |
-          chmod +x gradlew
-          export PATH="$PATH:$(pwd)/aarch64-linux-musl-cross/bin"
-          ./gradlew buildLinuxGlibcArm buildLinuxGlibcAarch64 buildLinuxMuslAarch64
-      - uses: actions/upload-artifact@v2
-        with:
-          name: linux-arm-natives
-          path: natives/*
-  mac-natives:
-    needs: [download-sources]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - name: Cache natives
-        uses: actions/cache@v2
-        id: cache-natives
-        with:
-          path: |
-            natives/darwin
-          key: mac-${{ hashFiles('build.gradle', 'toolchains.gradle', 'fuck_autotools/**', 'src/**') }}
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        with:
-          java-version: 15
-      - uses: actions/download-artifact@v2
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        with:
-          name: sources
-      - name: Extract sources
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: unzip src.zip
-      - name: Install darwin compiler
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: |
-          curl -sL https://github.com/natanbc/actions-binaries/releases/download/1/osxcross.tar.gz -o - | tar -xzf -
-          sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
-          sudo apt update
-          sudo apt install libssl1.0.0
-      - name: Build darwin natives
-        if: steps.cache-natives.outputs.cache-hit != 'true'
-        run: |
-          chmod +x gradlew
-          export PATH="$PATH:$(pwd)/osxcross/bin"
-          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(pwd)/osxcross/lib"
-          ./gradlew buildDarwin64
-      - uses: actions/upload-artifact@v2
-        with:
-          name: mac-natives
-          path: natives/*
+#  linux-arm-natives:
+#    needs: [download-sources]
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#      - name: Cache natives
+#        uses: actions/cache@v2
+#        id: cache-natives
+#        with:
+#          path: |
+#            natives/linux-arm
+#            natives/linux-aarch64
+#            natives/linux-musl-aarch64
+#          key: linux-arm-${{ hashFiles('build.gradle', 'toolchains.gradle', 'fuck_autotools/**', 'src/**') }}
+#      - name: Set up JDK
+#        uses: actions/setup-java@v1
+#        if: steps.cache-natives.outputs.cache-hit != 'true'
+#        with:
+#          java-version: 15
+#      - uses: actions/download-artifact@v2
+#        if: steps.cache-natives.outputs.cache-hit != 'true'
+#        with:
+#          name: sources
+#      - name: Extract sources
+#        if: steps.cache-natives.outputs.cache-hit != 'true'
+#        run: unzip src.zip
+#      - name: Install ARM compilers
+#        if: steps.cache-natives.outputs.cache-hit != 'true'
+#        run: |
+#          # installing these two breaks i386 compilation
+#          # https://bugs.launchpad.net/ubuntu/+source/gcc-defaults/+bug/1300211
+#          sudo apt install g++-arm-linux-gnueabihf
+#          sudo apt install g++-aarch64-linux-gnu
+#          curl -sL https://github.com/natanbc/actions-binaries/releases/download/1/aarch64-linux-musl-cross.tgz -o - | tar xzf -
+#      - name: Build ARM natives
+#        if: steps.cache-natives.outputs.cache-hit != 'true'
+#        run: |
+#          chmod +x gradlew
+#          export PATH="$PATH:$(pwd)/aarch64-linux-musl-cross/bin"
+#          ./gradlew buildLinuxGlibcArm buildLinuxGlibcAarch64 buildLinuxMuslAarch64
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: linux-arm-natives
+#          path: natives/*
   freebsd-natives:
     needs: [download-sources]
     runs-on: ubuntu-20.04
