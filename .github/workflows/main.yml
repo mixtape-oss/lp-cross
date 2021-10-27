@@ -196,7 +196,7 @@ jobs:
           name: windows-natives
           path: natives/*
   merge-publish:
-    needs: [linux-x86-natives, linux-arm-natives, mac-natives, freebsd-natives, windows-natives]
+    needs: [linux-x86-natives, freebsd-natives, windows-natives]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
